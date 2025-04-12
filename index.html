@@ -43,8 +43,9 @@
       <div class="text-muted mb-2">5. Drag watermark to reposition</div>
       <div class="row gap-2 mb-3">
         <button style="max-width: 200px;" id="resetBtn" class="btn btn-secondary btn-sm" disabled>Reset Position</button>
+        <button style="max-width: 200px;" id="centerBtn" class="btn btn-dark btn-sm" disabled>Center Logo</button>
         <button style="max-width: 200px;" id="applyBtn" class="btn btn-success btn-sm" disabled>Apply Watermark</button>
-        <button style="max-width: 200px;" id="downloadBtn" class="btn btn-primary btn-sm" disabled>Download Image</button>
+        <button style="max-width: 200px;margin-left: 10px;" id="downloadBtn" class="btn btn-primary btn-sm" disabled>Download Image</button>
       </div>
       <div class="spinner-border text-success" role="status" id="loadingSpinner">
         <span class="visually-hidden">Processing...</span>
@@ -72,6 +73,7 @@
   const resetBtn = document.getElementById('resetBtn');
   const applyBtn = document.getElementById('applyBtn');
   const downloadBtn = document.getElementById('downloadBtn');
+  const centerBtn = document.getElementById('centerBtn');
   const status = document.getElementById('status');
   const spinner = document.getElementById('loadingSpinner');
 
@@ -204,7 +206,13 @@
     const enabled = originalImage && watermark;
     resetBtn.disabled = !enabled;
     applyBtn.disabled = !enabled;
+    centerBtn.disabled = !enabled; // ✅ Add this line
   }
+
+  centerBtn.addEventListener('click', () => {
+    centerWatermark();
+    render();
+  });
 
   canvas.addEventListener('mousedown', e => {
     const { x, y } = getMouse(e);
